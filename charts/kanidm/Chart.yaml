@@ -1,0 +1,21 @@
+apiVersion: v2
+version: 0.1.0
+name: kanidm
+# renovate: image=docker.io/kanidm/server
+appVersion: "1.6.2"
+type: application
+description: A Helm chart for Kanidm
+icon: https://github.com/kanidm/kanidm/blob/9b7c542b0abf6e5d21305f191c23a60c0269f16d/artwork/logo-small.png
+home: https://kanidm.github.io/
+sources:
+  - https://github.com/kanidm/kanidm/
+dependencies:
+  - name: common
+    version: ^2.31
+    repository: oci://registry-1.docker.io/bitnamicharts
+annotations:
+  helm.sh/images: |
+    - name: kanidm-server
+      image: docker.io/kanidm/server
+    - name: kanidm-tools
+      image: docker.io/kanidm/tools

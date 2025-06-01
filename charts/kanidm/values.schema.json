@@ -1,0 +1,1284 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "adminSecret": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+          "required": []
+        },
+        "create": {
+          "default": true,
+          "required": [],
+          "title": "create",
+          "type": "boolean"
+        },
+        "name": {
+          "default": "",
+          "required": [],
+          "title": "name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "create",
+        "name"
+      ],
+      "title": "adminSecret",
+      "type": "object"
+    },
+    "affinity": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/affinity",
+      "required": []
+    },
+    "apiVersions": {
+      "description": "Override Kubernetes API versions reported by .Capabilities",
+      "items": {
+        "required": [],
+        "type": "string"
+      },
+      "required": [],
+      "title": "apiVersions"
+    },
+    "autoscaling": {
+      "additionalProperties": false,
+      "properties": {
+        "vpa": {
+          "additionalProperties": false,
+          "properties": {
+            "annotations": {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+              "required": []
+            },
+            "controlledResources": {
+              "items": {
+                "required": []
+              },
+              "required": [],
+              "title": "controlledResources",
+              "type": "array"
+            },
+            "enabled": {
+              "default": false,
+              "required": [],
+              "title": "enabled",
+              "type": "boolean"
+            },
+            "maxAllowed": {
+              "additionalProperties": false,
+              "required": [],
+              "title": "maxAllowed",
+              "type": "object"
+            },
+            "minAllowed": {
+              "additionalProperties": false,
+              "required": [],
+              "title": "minAllowed",
+              "type": "object"
+            }
+          },
+          "required": [
+            "enabled",
+            "controlledResources",
+            "maxAllowed",
+            "minAllowed"
+          ],
+          "title": "vpa",
+          "type": "object"
+        }
+      },
+      "required": [
+        "vpa"
+      ],
+      "title": "autoscaling",
+      "type": "object"
+    },
+    "cert": {
+      "additionalProperties": false,
+      "properties": {
+        "create": {
+          "default": true,
+          "required": [],
+          "title": "create",
+          "type": "boolean"
+        },
+        "issuer": {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "default": "ClusterIssuer",
+              "required": [],
+              "title": "kind",
+              "type": "string"
+            },
+            "name": {
+              "default": "",
+              "required": [],
+              "title": "name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "kind"
+          ],
+          "title": "issuer",
+          "type": "object"
+        }
+      },
+      "required": [
+        "create",
+        "issuer"
+      ],
+      "title": "cert",
+      "type": "object"
+    },
+    "common": {
+      "additionalProperties": true,
+      "required": [],
+      "title": "common"
+    },
+    "commonAnnotations": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+      "required": []
+    },
+    "commonLabels": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/labels",
+      "required": []
+    },
+    "config": {
+      "additionalProperties": false,
+      "properties": {
+        "create": {
+          "default": true,
+          "description": "Enables creation of a ConfigMap containing the server configuration\nfile.",
+          "required": [],
+          "title": "create",
+          "type": "boolean"
+        },
+        "data": {
+          "additionalProperties": false,
+          "properties": {
+            "server.toml": {
+              "default": "version = \"2\"\ndb_path = \"/data/kanidm.db\"\ntls_chain = \"/certs/tls.crt\"\ntls_key = \"/certs/tls.key\"\n",
+              "description": "The contents of the server configuration file.",
+              "required": [],
+              "title": "server.toml",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server.toml"
+          ],
+          "title": "data",
+          "type": "object"
+        },
+        "domain": {
+          "default": "",
+          "examples": [
+            "idm.example.com"
+          ],
+          "format": "idn-hostname",
+          "required": [],
+          "title": "domain"
+        }
+      },
+      "required": [
+        "create",
+        "domain",
+        "data"
+      ],
+      "title": "config",
+      "type": "object"
+    },
+    "containerSecurityContext": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/container-v1.json#/properties/securityContext",
+      "required": []
+    },
+    "daemonsetAnnotations": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+      "required": []
+    },
+    "deploymentAnnotations": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+      "required": []
+    },
+    "extraEnvFrom": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/container-v1.json#/properties/envFrom",
+      "required": []
+    },
+    "extraEnvVars": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/container-v1.json#/properties/env",
+      "required": []
+    },
+    "extraVolumeMounts": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/container-v1.json#/properties/volumeMounts",
+      "required": []
+    },
+    "extraVolumes": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/volumes",
+      "required": []
+    },
+    "fullnameOverride": {
+      "default": "",
+      "description": "String to fully override `common.names.fullname`",
+      "required": [],
+      "title": "fullnameOverride",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "global": {
+      "additionalProperties": false,
+      "properties": {
+        "imagePullSecrets": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/imagePullSecrets",
+          "required": []
+        },
+        "imageRegistry": {
+          "default": "",
+          "description": "Global Docker image registry",
+          "required": [],
+          "title": "imageRegistry",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "storageClass": {
+          "default": "",
+          "description": "Global StorageClass for Persistent Volume(s)",
+          "required": [],
+          "title": "storageClass",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [],
+      "title": "global",
+      "type": "object"
+    },
+    "groups": {
+      "items": {
+        "properties": {
+          "memberOf": {
+            "items": {
+              "required": [],
+              "type": "string"
+            },
+            "required": [],
+            "type": "array"
+          },
+          "name": {
+            "required": [],
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "required": [],
+      "title": "groups",
+      "type": "array"
+    },
+    "hostUsers": {
+      "default": false,
+      "required": [],
+      "title": "hostUsers",
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "httpRoute": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+          "required": []
+        },
+        "enabled": {
+          "default": false,
+          "description": "Enable HttpRoute record generation",
+          "required": [],
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "hostnames": {
+          "description": "The DNS name to respond to",
+          "items": {
+            "required": []
+          },
+          "required": [],
+          "title": "hostnames",
+          "type": "array"
+        },
+        "parentRefs": {
+          "items": {
+            "required": []
+          },
+          "required": [],
+          "title": "parentRefs",
+          "type": "array"
+        },
+        "rules": {
+          "description": "An array of rules to use for the route,\nthe service backend will be automatically added\nto all rules",
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "matches": {
+                    "items": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "path": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "type": {
+                                  "default": "PathPrefix",
+                                  "required": [],
+                                  "title": "type",
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "default": "/",
+                                  "required": [],
+                                  "title": "value",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "type",
+                                "value"
+                              ],
+                              "title": "path",
+                              "type": "object"
+                            }
+                          },
+                          "required": [
+                            "path"
+                          ],
+                          "type": "object"
+                        }
+                      ],
+                      "required": []
+                    },
+                    "required": [],
+                    "title": "matches",
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "matches"
+                ],
+                "type": "object"
+              }
+            ],
+            "required": []
+          },
+          "required": [],
+          "title": "rules",
+          "type": "array"
+        }
+      },
+      "required": [
+        "enabled",
+        "hostnames",
+        "parentRefs",
+        "rules"
+      ],
+      "title": "httpRoute",
+      "type": "object"
+    },
+    "image": {
+      "additionalProperties": false,
+      "properties": {
+        "digest": {
+          "default": "",
+          "description": "Overrides the image digest",
+          "required": [],
+          "title": "digest",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pullPolicy": {
+          "default": "Always",
+          "description": "image pull policy",
+          "enum": [
+            "Always",
+            "IfNotPresent",
+            "Never"
+          ],
+          "required": [],
+          "title": "pullPolicy"
+        },
+        "pullSecrets": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/imagePullSecrets",
+          "required": []
+        },
+        "registry": {
+          "default": "",
+          "description": "image registry",
+          "required": [],
+          "title": "registry",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "repository": {
+          "default": "kanidm/server",
+          "description": "image repository",
+          "required": [],
+          "title": "repository",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tag": {
+          "default": "",
+          "description": "Overrides the image tag",
+          "required": [],
+          "title": "tag",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [],
+      "title": "image",
+      "type": "object"
+    },
+    "ingress": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+          "required": []
+        },
+        "className": {
+          "default": "",
+          "description": "IngressClass that will be be used to implement the Ingress",
+          "required": [],
+          "title": "className",
+          "type": "string"
+        },
+        "enabled": {
+          "default": false,
+          "description": "Enable ingress record generation",
+          "required": [],
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "extraHosts": {
+          "items": {
+            "properties": {
+              "name": {
+                "required": [],
+                "type": "string"
+              },
+              "path": {
+                "default": "/",
+                "required": [],
+                "type": "string"
+              },
+              "pathType": {
+                "default": "ImplementationSpecific",
+                "required": [],
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "required": [],
+          "title": "extraHosts"
+        },
+        "extraPaths": {
+          "items": {
+            "required": []
+          },
+          "required": [],
+          "title": "extraPaths",
+          "type": "array"
+        },
+        "hostname": {
+          "default": "",
+          "required": [],
+          "title": "hostname",
+          "type": "string"
+        },
+        "path": {
+          "default": "/",
+          "required": [],
+          "title": "path",
+          "type": "string"
+        },
+        "pathType": {
+          "default": "ImplementationSpecific",
+          "required": [],
+          "title": "pathType",
+          "type": "string"
+        },
+        "tls": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/ingressspec.json#/properties/tls",
+          "required": []
+        }
+      },
+      "required": [
+        "enabled",
+        "className",
+        "hostname",
+        "path",
+        "pathType",
+        "extraPaths"
+      ],
+      "title": "ingress",
+      "type": "object"
+    },
+    "initContainers": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/containers",
+      "required": []
+    },
+    "kubeVersion": {
+      "default": "",
+      "description": "Override Kubernetes version",
+      "required": [],
+      "title": "kubeVersion",
+      "type": "string"
+    },
+    "livenessProbe": {
+      "additionalProperties": false,
+      "description": "This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/",
+      "properties": {
+        "httpGet": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "default": "/status",
+              "required": [],
+              "title": "path",
+              "type": "string"
+            },
+            "port": {
+              "default": "https",
+              "required": [],
+              "title": "port",
+              "type": "string"
+            },
+            "scheme": {
+              "default": "HTTPS",
+              "required": [],
+              "title": "scheme",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "port",
+            "scheme"
+          ],
+          "title": "httpGet",
+          "type": "object"
+        }
+      },
+      "required": [
+        "httpGet"
+      ],
+      "title": "livenessProbe",
+      "type": "object"
+    },
+    "nameOverride": {
+      "default": "",
+      "description": "String to partially override `common.names.name`",
+      "required": [],
+      "title": "nameOverride",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "namespaceOverride": {
+      "default": "",
+      "description": "Overrides the namespace to place resources into",
+      "required": [],
+      "title": "namespaceOverride",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "networkPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "addExternalClientAccess": {
+          "default": true,
+          "description": "Allow access from pods with client label set to `true`. Ignored if `networkPolicy.allowExternal` is `true`.",
+          "required": [],
+          "title": "addExternalClientAccess",
+          "type": "boolean"
+        },
+        "allowExternal": {
+          "default": true,
+          "required": [],
+          "title": "allowExternal",
+          "type": "boolean"
+        },
+        "allowExternalEgress": {
+          "default": true,
+          "description": "Allow the pod to access any range of port and all destinations",
+          "required": [],
+          "title": "allowExternalEgress",
+          "type": "boolean"
+        },
+        "enabled": {
+          "default": true,
+          "required": [],
+          "title": "enabled",
+          "type": "boolean"
+        },
+        "extraEgress": {
+          "description": "Add extra egress rules to the NetworkPolicy (ignored if allowExternalEgress=true)",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/networkpolicyegressrule.json",
+                "required": []
+              },
+              {
+                "additionalProperties": true,
+                "required": [],
+                "type": "object"
+              }
+            ],
+            "required": []
+          },
+          "required": [],
+          "title": "extraEgress"
+        },
+        "extraIngress": {
+          "description": "Add extra ingress rules to the NetworkPolicy",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/networkpolicyingressrule.json",
+                "required": []
+              },
+              {
+                "additionalProperties": true,
+                "required": [],
+                "type": "object"
+              }
+            ],
+            "required": []
+          },
+          "required": [],
+          "title": "extraIngress"
+        },
+        "flavor": {
+          "default": "kubernetes",
+          "enum": [
+            "kubernetes",
+            "cilium"
+          ],
+          "required": [],
+          "title": "flavor"
+        },
+        "ingressNamespaces": {
+          "description": "Namespaces, from which, to allow traffic. Ignored if `networkPolicy.allowExternal` is true.",
+          "items": {
+            "properties": {
+              "name": {
+                "required": [],
+                "type": "string"
+              },
+              "podLabels": {
+                "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/labels",
+                "required": []
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "required": [],
+          "title": "ingressNamespaces"
+        },
+        "ingressPodMatchLabels": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/labels",
+          "required": []
+        }
+      },
+      "required": [
+        "enabled",
+        "allowExternal",
+        "allowExternalEgress",
+        "addExternalClientAccess"
+      ],
+      "title": "networkPolicy",
+      "type": "object"
+    },
+    "nodeSelector": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/nodeSelector",
+      "required": []
+    },
+    "oauth2": {
+      "items": {
+        "properties": {
+          "customClaims": {
+            "items": {
+              "properties": {
+                "group": {
+                  "required": [],
+                  "type": "string"
+                },
+                "name": {
+                  "required": [],
+                  "type": "string"
+                },
+                "values": {
+                  "required": [],
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "required": [],
+            "type": "array"
+          },
+          "displayName": {
+            "required": [],
+            "type": "string"
+          },
+          "insecureDisablePkce": {
+            "default": false,
+            "required": [],
+            "type": "boolean"
+          },
+          "landingPage": {
+            "format": "uri",
+            "required": [],
+            "type": "string"
+          },
+          "localhost": {
+            "default": false,
+            "required": [],
+            "type": "boolean"
+          },
+          "name": {
+            "required": [],
+            "type": "string"
+          },
+          "public": {
+            "default": false,
+            "required": [],
+            "type": "boolean"
+          },
+          "redirects": {
+            "items": {
+              "format": "uri",
+              "required": [],
+              "type": "string"
+            },
+            "required": [],
+            "type": "array"
+          },
+          "scopes": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "required": [],
+            "type": "object"
+          },
+          "secret": {
+            "properties": {
+              "annotations": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "required": [],
+                "type": "object"
+              },
+              "key": {
+                "required": [],
+                "type": "string"
+              },
+              "name": {
+                "required": [],
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "required": [],
+      "title": "oauth2",
+      "type": "array"
+    },
+    "persistence": {
+      "additionalProperties": false,
+      "properties": {
+        "accessModes": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/persistentvolumeclaimspec.json#/properties/accessModes",
+          "required": []
+        },
+        "annotations": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+          "required": []
+        },
+        "dataSource": {
+          "anyOf": [
+            {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/persistentvolumeclaimspec.json#/properties/dataSource",
+              "required": []
+            },
+            {
+              "required": []
+            }
+          ],
+          "default": "null",
+          "required": [],
+          "title": "dataSource"
+        },
+        "existingClaim": {
+          "default": "",
+          "required": [],
+          "title": "existingClaim",
+          "type": "string"
+        },
+        "selector": {
+          "anyOf": [
+            {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/persistentvolumeclaimspec.json#/properties/selector",
+              "required": []
+            },
+            {
+              "required": []
+            }
+          ],
+          "default": "null",
+          "required": [],
+          "title": "selector"
+        },
+        "size": {
+          "default": "2Gi",
+          "required": [],
+          "title": "size",
+          "type": "string"
+        },
+        "storageClass": {
+          "default": "",
+          "required": [],
+          "title": "storageClass",
+          "type": "string"
+        }
+      },
+      "required": [
+        "storageClass",
+        "size",
+        "existingClaim"
+      ],
+      "title": "persistence",
+      "type": "object"
+    },
+    "podAnnotations": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+      "required": []
+    },
+    "podLabels": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/labels",
+      "required": []
+    },
+    "podSecurityContext": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/securityContext",
+      "required": []
+    },
+    "postJob": {
+      "additionalProperties": false,
+      "properties": {
+        "containerSecurityContext": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/container-v1.json#/properties/securityContext",
+          "required": []
+        },
+        "podAnnotations": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+          "required": []
+        },
+        "podLabels": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/labels",
+          "required": []
+        },
+        "podSecurityContext": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/securityContext",
+          "required": []
+        },
+        "rbac": {
+          "additionalProperties": false,
+          "properties": {
+            "create": {
+              "default": true,
+              "required": [],
+              "title": "create",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "create"
+          ],
+          "title": "rbac",
+          "type": "object"
+        },
+        "resources": {
+          "additionalProperties": false,
+          "required": [],
+          "title": "resources",
+          "type": "object"
+        },
+        "serviceAccount": {
+          "additionalProperties": false,
+          "properties": {
+            "annotations": {
+              "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+              "required": []
+            },
+            "automount": {
+              "default": false,
+              "description": "Automatically mount a ServiceAccount's API credentials?",
+              "required": [],
+              "title": "automount",
+              "type": "boolean"
+            },
+            "create": {
+              "default": true,
+              "description": "Specifies whether a service account should be created",
+              "required": [],
+              "title": "create",
+              "type": "boolean"
+            },
+            "name": {
+              "default": "",
+              "description": "The name of the service account to use.\nIf not set and create is true, a name is generated using the fullname template",
+              "required": [],
+              "title": "name",
+              "type": "string"
+            }
+          },
+          "required": [
+            "create",
+            "automount",
+            "name"
+          ],
+          "title": "serviceAccount",
+          "type": "object"
+        }
+      },
+      "required": [
+        "rbac",
+        "serviceAccount",
+        "resources"
+      ],
+      "title": "postJob",
+      "type": "object"
+    },
+    "readinessProbe": {
+      "additionalProperties": false,
+      "properties": {
+        "httpGet": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "default": "/status",
+              "required": [],
+              "title": "path",
+              "type": "string"
+            },
+            "port": {
+              "default": "https",
+              "required": [],
+              "title": "port",
+              "type": "string"
+            },
+            "scheme": {
+              "default": "HTTPS",
+              "required": [],
+              "title": "scheme",
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "port",
+            "scheme"
+          ],
+          "title": "httpGet",
+          "type": "object"
+        }
+      },
+      "required": [
+        "httpGet"
+      ],
+      "title": "readinessProbe",
+      "type": "object"
+    },
+    "resources": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/resources",
+      "required": []
+    },
+    "resourcesPreset": {
+      "default": "none",
+      "description": "Set container resources according to one common preset. This is ignored if resources is set (resources is recommended for production).",
+      "enum": [
+        "none",
+        "nano",
+        "small",
+        "medium",
+        "large",
+        "xlarge",
+        "2xlarge"
+      ],
+      "required": [],
+      "title": "resourcesPreset"
+    },
+    "revisionHistoryLimit": {
+      "default": "10",
+      "description": "The number of old ReplicaSets to retain",
+      "minimum": 0,
+      "required": [],
+      "title": "revisionHistoryLimit"
+    },
+    "service": {
+      "additionalProperties": false,
+      "description": "This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/",
+      "properties": {
+        "annotations": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+          "required": []
+        },
+        "ports": {
+          "additionalProperties": false,
+          "properties": {
+            "https": {
+              "default": 8443,
+              "required": [],
+              "title": "https",
+              "type": "integer"
+            },
+            "ldaps": {
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "default": false,
+                  "required": [],
+                  "title": "enabled",
+                  "type": "boolean"
+                },
+                "port": {
+                  "default": 3636,
+                  "required": [],
+                  "title": "port",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "enabled",
+                "port"
+              ],
+              "title": "ldaps",
+              "type": "object"
+            }
+          },
+          "required": [
+            "https",
+            "ldaps"
+          ],
+          "title": "ports",
+          "type": "object"
+        }
+      },
+      "required": [
+        "ports"
+      ],
+      "title": "service",
+      "type": "object"
+    },
+    "serviceAccount": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+          "required": []
+        },
+        "automount": {
+          "default": false,
+          "description": "Automatically mount a ServiceAccount's API credentials?",
+          "required": [],
+          "title": "automount",
+          "type": "boolean"
+        },
+        "create": {
+          "default": true,
+          "description": "Specifies whether a service account should be created",
+          "required": [],
+          "title": "create",
+          "type": "boolean"
+        },
+        "name": {
+          "default": "",
+          "description": "The name of the service account to use.\nIf not set and create is true, a name is generated using the fullname template",
+          "required": [],
+          "title": "name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "create",
+        "automount",
+        "name"
+      ],
+      "title": "serviceAccount",
+      "type": "object"
+    },
+    "statefulsetAnnotations": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/objectmeta.json#/properties/annotations",
+      "required": []
+    },
+    "tolerations": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/tolerations",
+      "required": []
+    },
+    "toolsImage": {
+      "additionalProperties": false,
+      "properties": {
+        "digest": {
+          "default": "",
+          "description": "Overrides the image digest",
+          "required": [],
+          "title": "digest",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pullPolicy": {
+          "default": "Always",
+          "description": "image pull policy",
+          "enum": [
+            "Always",
+            "IfNotPresent",
+            "Never"
+          ],
+          "required": [],
+          "title": "pullPolicy"
+        },
+        "registry": {
+          "default": "",
+          "description": "image registry",
+          "required": [],
+          "title": "registry",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "repository": {
+          "default": "kanidm/tools",
+          "description": "image repository",
+          "required": [],
+          "title": "repository",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tag": {
+          "default": "",
+          "description": "Overrides the image tag",
+          "required": [],
+          "title": "tag",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [],
+      "title": "toolsImage",
+      "type": "object"
+    },
+    "topologySpreadConstraints": {
+      "$ref": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podspec-v1.json#/properties/topologySpreadConstraints",
+      "required": []
+    },
+    "users": {
+      "items": {
+        "properties": {
+          "displayName": {
+            "required": [],
+            "type": "string"
+          },
+          "email": {
+            "format": "idn-email",
+            "required": [],
+            "type": "string"
+          },
+          "groups": {
+            "items": {
+              "required": [],
+              "type": "string"
+            },
+            "required": [],
+            "type": "array"
+          },
+          "name": {
+            "required": [],
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "required": [],
+      "title": "users",
+      "type": "array"
+    }
+  },
+  "required": [
+    "global",
+    "kubeVersion",
+    "image",
+    "toolsImage",
+    "config",
+    "persistence",
+    "cert",
+    "adminSecret",
+    "serviceAccount",
+    "service",
+    "networkPolicy",
+    "ingress",
+    "httpRoute",
+    "livenessProbe",
+    "readinessProbe",
+    "autoscaling",
+    "postJob"
+  ],
+  "type": "object"
+}

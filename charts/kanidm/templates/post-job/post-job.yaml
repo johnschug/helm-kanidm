@@ -1,0 +1,92 @@
+{{- if or .Values.adminSecret.create .Values.groups .Values.users .Values.oauth2 -}}
+apiVersion: {{ include "common.capabilities.job.apiVersion" . }}
+kind: Job
+metadata:
+  name: {{ include "post-job.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" (dict "customLabels" .Values.commonLabels "context" $) | nindent 4 }}
+    app.kubernetes.io/component: post-job
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    {{- with .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" (dict "value" . "context" $) | nindent 4 }}
+    {{- end }}
+spec:
+  template:
+    metadata:
+      {{- $podLabels := include "common.tplvalues.merge" (dict "values" (list .Values.postJob.podLabels .Values.commonLabels) "context" .) }}
+      labels: {{- include "common.labels.standard" (dict "customLabels" $podLabels "context" $) | nindent 8 }}
+        app.kubernetes.io/component: post-job
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/post-job/configmap.yaml") . | sha256sum }}
+        {{- with .Values.postJob.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" . "context" $) | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "common.images.renderPullSecrets" (dict "images" (list .Values.image) "context" $) | nindent 6 }}
+      serviceAccountName: {{ include "post-job.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.automount }}
+      {{- if and (semverCompare "^1.33.0" .Capabilities.KubeVersion.Version) (ne .Values.hostUsers true) }}
+      hostUsers: {{ .Values.hostUsers }}
+      {{- end}}
+      {{- with .Values.postJob.podSecurityContext }}
+      securityContext: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: OnFailure
+      containers:
+        - name: kanidm-post-job
+          image: "{{ .Values.toolsImage.repository }}:{{ .Values.toolsImage.tag | default .Values.image.tag | default .Chart.AppVersion}}"
+          imagePullPolicy: {{ .Values.toolsImage.pullPolicy | default .Values.image.pullPolicy }}
+          {{- with .Values.postJob.containerSecurityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          command: ["/bin/bash", "/scripts/job.sh"]
+          volumeMounts:
+            - name: bin
+              mountPath: /usr/local/bin
+            - name: tmp
+              mountPath: /tmp
+            - name: scripts
+              mountPath: /scripts
+              readOnly: true
+            - name: kanidm-certs
+              mountPath: /certs
+              readOnly: true
+            - name: admin-secret
+              mountPath: "/secrets"
+              readOnly: true
+            - name: sa-token-vol
+              mountPath: "/service-account"
+              readOnly: true
+          {{- with .Values.postJob.resources }}
+          resources: {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: bin
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+        - name: scripts
+          configMap:
+            name: {{ include "post-job.fullname" . }}
+        - name: admin-secret
+          secret:
+            secretName: {{ include "kanidm.adminSecretName" . }}
+            optional: true
+        - name: sa-token-vol
+          projected:
+            sources:
+            - configMap:
+                name: kube-root-ca.crt
+            - serviceAccountToken:
+                expirationSeconds: 600
+                path: token
+        - name: kanidm-certs
+          secret:
+            secretName: {{ include "common.names.fullname" . }}-tls
+            defaultMode: 0400
+            items:
+              - key: ca.crt
+                path: ca.crt
+{{- end }}

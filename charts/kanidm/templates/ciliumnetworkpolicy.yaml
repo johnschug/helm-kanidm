@@ -1,0 +1,69 @@
+{{- if and (.Values.networkPolicy.enabled) (eq .Values.networkPolicy.flavor "cilium") }}
+kind: CiliumNetworkPolicy
+apiVersion: cilium.io/v2
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" (dict "customLabels" .Values.commonLabels "context" $) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" (dict "value" .Values.commonAnnotations "context" $) | nindent 4 }}
+  {{- end }}
+spec:
+  {{- $podLabels := include "common.tplvalues.merge" (dict "values" (list .Values.podLabels .Values.commonLabels) "context" .) }}
+  endpointSelector:
+    matchLabels: {{- include "common.labels.matchLabels" (dict "customLabels" $podLabels "context" $) | nindent 6 }}
+      app.kubernetes.io/component: server
+  ingress:
+    - toPorts:
+      - ports:
+        - port: {{ .Values.service.ports.https | quote }}
+          protocol: TCP
+        {{- if .Values.service.ports.ldaps.enabled }}
+        - port: {{ .Values.service.ports.ldaps.port | quote }}
+          protocol: TCP
+        {{- end }}
+      {{- if .Values.networkPolicy.allowExternal }}
+      fromEntities:
+        - all
+      {{- else if not .Values.networkPolicy.allowExternal }}
+      fromEndpoints:
+        - matchLabels: {{- include "common.labels.matchLabels" (dict "customLabels" .Values.commonLabels "context" $) | nindent 12 }}
+        {{- if .Values.networkPolicy.allowExternalClientAccess }}
+        - matchLabels:
+            {{ template "common.names.fullname" . }}-client: "true"
+        {{- end }}
+        {{- if .Values.networkPolicy.ingressPodMatchLabels }}
+        - matchLabels: {{- include "common.tplvalues.render" (dict "value" .Values.networkPolicy.ingressPodMatchLabels "context" $) | nindent 14 }}
+        {{- end }}
+        {{- range .Values.networkPolicy.ingressNamespaces }}
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": {{ include "common.tplvalues.render" (dict "value" .name "context" $) | quote }}
+            {{- with .podLabels }}
+            {{- include "common.tplvalues.render" (dict "value" . "context" $) | nindent 14 }}
+            {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- if .Values.networkPolicy.extraIngress }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.networkPolicy.extraIngress "context" $) | nindent 4 }}
+    {{- end }}
+  egress:
+    {{- if .Values.networkPolicy.allowExternalEgress }}
+    - toEntities:
+      - all
+    {{- else }}
+    - toEndpoints:
+      - matchLabels:
+          "k8s:io.kubernetes.pod.namespace": "kube-system"
+          "k8s:k8s-app": "kube-dns"
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+          rules:
+            dns:
+              - matchPattern: "*"
+    {{- if .Values.networkPolicy.extraEgress }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.networkPolicy.extraEgress "context" $) | nindent 4 }}
+    {{- end }}
+    {{- end }}
+{{- end }}
